@@ -1,0 +1,16 @@
+<h1>Sessions#newttßß</h1>
+<p>Find meyy in app/views/sessions/new.html.erb</p>
+
+<p>ooooß</p>
+<%= form_with(scope: :session , url: sessions_path , local: true) do |f| %>
+
+<p>ooooß</p>
+  <%= f.label "メールアドレス" %>
+  <%= f.email_field :email %>
+
+  <%= f.label "パスワード" %>
+  <%= f.password_field :password %>
+
+  <%= f.submit "ログイン" %>
+
+<% end %>
