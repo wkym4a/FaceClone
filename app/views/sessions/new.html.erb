@@ -1,16 +1,29 @@
-<h1>Sessions#newttßß</h1>
-<p>Find meyy in app/views/sessions/new.html.erb</p>
+<!--↑エラーメッセージ表示枠……バリデーションエラーを出す画面ではこれを追加しておくこと。-->
+<% content_for :show_msgerr do%>
+  <%= render 'layouts/form_msgerr', model_info: @user %>
+<% end %>
+<!--↑エラーメッセージ表示枠-->
 
-<p>ooooß</p>
+<!--↓タイトル表示枠-->
+<% content_for :show_head_title do%>
+  <h1 class="title_head">ログイン画面</h1>
+<% end %>
+<!--↑タイトル表示枠-->
+
+
 <%= form_with(scope: :session , url: sessions_path , local: true) do |f| %>
 
-<p>ooooß</p>
-  <%= f.label "メールアドレス" %>
-  <%= f.email_field :email %>
+  <div class="line_info">
+    <%= f.label "メールアドレス"  ,class: "label_user_info line_content_1" %>
+    <%= f.email_field :email  ,class: "input_user_info line_content_2" %>
+  </div>
 
-  <%= f.label "パスワード" %>
-  <%= f.password_field :password %>
+  <div class="line_info">
+    <%= f.label "パスワード"  ,class: "label_user_info line_content_1" %>
+    <%= f.password_field :password  ,class: "input_user_info line_content_2" %>
+  </div>
 
-  <%= f.submit "ログイン" %>
-
+  <div">
+    <%= f.submit "ログイン" ,class: "btn btn-default btn_next"%>
+  </div>
 <% end %>

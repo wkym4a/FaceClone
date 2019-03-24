@@ -1,3 +1,18 @@
-<h1><%= @user.name %>のページ</h1>
+<!--↑エラーメッセージ表示枠……バリデーションエラーを出す画面ではこれを追加しておくこと。-->
+<% content_for :show_msgerr do%>
+  <%= render 'layouts/form_msgerr', model_info: @user %>
+<% end %>
+<!--↑エラーメッセージ表示枠-->
 
-<p>メールアドレス: <%= @user.email %></p>
+<!--↓タイトル表示枠-->
+<% content_for :show_head_title do%>
+  <h1 class="title_head"><%= get_tablename_by_model(@user) %>情報</h1>
+<% end %>
+<!--↑タイトル表示枠-->
+
+<h3>ログインしています。</h3>
+
+<h5>【現在のログインユーザー情報】</h5>
+<p>●名前 : <%= @user.name %></p>
+<p>●メールアドレス: <%= @user.email %></p>
+<p>※ユーザー情報変更機能は実装されていません。</p>

@@ -1,0 +1,60 @@
+<!--↑エラーメッセージ表示枠……バリデーションエラーを出す画面ではこれを追加しておくこと。-->
+<% content_for :show_msgerr do%>
+  <%= render 'layouts/form_msgerr', model_info: picture %>
+<% end %>
+<!--↑エラーメッセージ表示枠-->
+
+<%= form_with(model: picture, url: get_next_url_picture(picture.id), local: true) do |f| %>
+<%  %>
+
+
+<div class="line_info">
+  <%= f.label "題名" ,class: "label_user_info line_content_1" %>
+  <%= label "", picture.title ,class: "input_user_info line_content_2" %>
+</div>
+
+<div class="line_info">
+  <%= f.label "文章" ,class: "label_user_info line_content_1" %>
+  <%= text_area "","readonly", value: picture.content ,readonly: true,class: "input_user_info line_content_2" %>
+</div>
+
+
+  <%= f.label "画像" %>
+  <!-- 確認画面でアップロードした画像を表示させるための記述……【画像を削除する】場合は見せない -->
+  <% if not(action_name=="show") %>
+    <% if not(params[:picture][:remove_image]=="1") %>
+      <%= image_tag(picture.image.url) if picture.image && picture.image.url %>
+    <% end %>
+  <% else %>
+    <%= image_tag(picture.image.url) if picture.image && picture.image.url %>
+  <% end %>
+
+  <%= f.hidden_field :title %>
+  <%= f.hidden_field :content %>
+  <%= f.hidden_field :image_cache %>
+
+  <% if not(action_name=="show") %>
+    <p>
+    <% if params[:picture][:remove_image]=="1" %>
+      <%= f.check_box :remove_image , onclick: "return false;" , onfocus: "this.blur();" ,checked: true  %>画像を削除する
+    <% else %>
+      <%= f.hidden_field :remove_image %>
+    <% end %>
+    </p>
+
+    <%= f.submit "投稿する" %>
+  <% end %>
+
+
+
+<% end %>
+
+<%= form_with(model:picture, url:get_next_url_picture(picture.id,false),
+              local:true, method:"get") do |f| %>
+
+  <%= f.hidden_field :title %>
+  <%= f.hidden_field :content %>
+  <%= f.hidden_field :image_cache %>
+
+  <%= f.submit "戻る", name: "back" %>
+<% end %>

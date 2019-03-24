@@ -1,0 +1,41 @@
+<!--↑エラーメッセージ表示枠……バリデーションエラーを出す画面ではこれを追加しておくこと。-->
+<% content_for :show_msgerr do%>
+  <%= render 'layouts/form_msgerr', model_info: picture %>
+<% end %>
+<!--↑エラーメッセージ表示枠-->
+
+
+<%= form_with(model: picture,local: true ,url:get_next_url_picture(picture.id) ,
+              method: :post) do |f| %>
+
+  <%= f.label "題名" %>
+  <%= f.text_field :title %>
+
+  <%= f.label "文章" %>
+  <%= f.text_area :content %>
+
+  <%= f.label "画像" %>
+  <%= f.hidden_field :image_cache %>
+  <%= f.file_field :image, id: "select_image" %>
+
+
+  <!-- 「画像を削除する」かどうかの選択……【更新時】のみ表示する -->
+  <% if ((params[:validate_err] ==nil && action_name== 'edit') || %>
+    <% (params[:validate_err] == "on" && action_name== 'edit_confirm')) %>
+    <p><%= f.check_box :remove_image %>画像を削除する</p>
+  <% else %>
+    <p><%= f.hidden_field :remove_image %></p>
+  <% end %>
+
+  <%= image_tag(f.object.image.url) if f.object.image && f.object.image.url %>
+
+  <%= f.submit "登録",class: 'btn btn-default'  %>
+
+    <% if ((params[:validate_err] ==nil && action_name== 'edit') || %>
+    <% (params[:validate_err] == "on" && action_name== 'edit_confirm')) %>
+      <%= link_to '削除する', picture, method: :delete,
+       data: { confirm: '本当に削除してよろしいですか?' } ,
+        class: 'btn btn-default' %>
+    <% end %>
+
+<% end %>
