@@ -87,6 +87,11 @@ body{
 
   height: 50px;
   }
+.line_info_multiline{
+  position: relative;
+
+  height: 120px;
+  }
 
   .line_content_1,.line_content_2{
     position: absolute;
@@ -106,7 +111,22 @@ body{
   right:50px;
   bottom: 120px;
 }
+  /**削除ボタン→登録ボタンの左に表示*/
+  .btn_del{
+  position: absolute;
+  right:150px;
+  bottom: 120px;
+}
 
 .err_msg{
   color: white;
+}
+
+
+.row-eq-height {
+  flex-wrap: wrap;
+}
+
+.show_textarea{
+  background-color:silver;
 }

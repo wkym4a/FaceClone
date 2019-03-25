@@ -1,42 +1,59 @@
-  <table class="picture_box" >
+<%= link_to '新しく投稿する', new_picture_path,class: "btn btn-default " %>
 
-    <% @pictures.each do |picture| %>
-      <tr>
+<div class="box_picture_index">
+    <table class="" >
+      <% @pictures.each do |picture| %>
+        <tr class="row box_picture_index_content">
+          <td class="col-xs-12">
+            <div class="row row-eq-height index_box_line">
 
-        <td>
-          <div class="">
+              <div class="col-xs-12 boxline_picture_index">
+                <div class="">
 
-            <div class="ユーザー→インデックスへ">
-            <%= link_to picture.user.name.to_s , user_index_picture_path(picture.user_id),class: 'i' %>
-            <%= label "","さんの投稿です。"  %><!-- ←cssで開業しないようにしたい -->
+                <%= link_to picture.user.name.to_s , user_index_picture_path(picture.user_id),class: 'i' %>
+                <%= label "","さんの投稿です。"  %>
+              </div>
+              </div>
 
-            <%= (picture.user_id) %>
+              <div div="col-xs-12 boxline_picture_index">
+                <%= label ""," 　　 題名："  %>
+                <%= label "",picture.title ,class: 'i' %>
+              </div>
+
+              <div class="col-xs-12 boximage_picture_index">
+                <% if picture.image && picture.image.url %>
+                  <%= image_tag(picture.image.url)  %>
+                <% else %>
+                  <%= label ""," 　　画像はまだ登録されていません。"  %>
+                <% end %>
+              </div>
+
+              <div class="col-xs-12 boxarea_picture_index">
+                <%= text_area "","readonly", value: picture.content ,readonly: true ,class: "boxarea_picture_index_content"%>
+              </div>
+
+              <div class="col-xs-2">
+                <%= link_to "詳細を表示", picture,href: picture_path(picture.id),method: :get,class: "btn btn-default"  %>
+              </div>
+
+              <div class="col-xs-6">
+              </div>
+
+              <div class="col-xs-2">
+                 <%= link_to "編集する", picture ,href: edit_picture_path(picture.id) ,method: :get,class: "btn btn-default"  %>
+              </div>
+
+              <div class="col-xs-2">
+                <%= link_to '削除する', picture, method: :delete,data: { confirm: '本当に削除してよろしいですか?' } ,
+                class: 'btn btn-default' %>
+              </div>
+
             </div>
 
-            <div class="題名">
-              <%= label "",picture.title ,class: 'i' %>
-
-            </div>
-            <div class="画像">
-              <%= image_tag(picture.image.url) if picture.image && picture.image.url %>
-
-            </div>
-            <div class="本文">
-              <%= text_area "","readonly", value: picture.content ,readonly: true %>
-
-            </div>
-            <div class="詳細へのボタン">
-              <%= link_to "詳細を表示", picture,href: picture_path(picture.id),method: :get,class: "btn btn-default"  %>
-              <%= link_to "編集する", picture ,href: edit_picture_path(picture.id) ,method: :get,class: "btn btn-default"  %>
-              <%= link_to '削除する', picture, method: :delete,data: { confirm: '本当に削除してよろしいですか?' } ,
-                  class: 'btn btn-default' %>
-
-            </div>
-          </div>
-        </td>
-      </tr>
+          </td>
 
 
-    <% end %>
-
-  </table>
+        </tr>
+      <% end %>
+    </table>
+  </div>
