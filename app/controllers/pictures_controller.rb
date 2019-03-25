@@ -30,10 +30,17 @@ class PicturesController < ApplicationController
 
   #新規画面表示
   def new
-    if  params[:back]
-      @picture=Picture.new(picture_params)
+
+    if logged_in?
+
+      if  params[:back]
+        @picture=Picture.new(picture_params)
+      else
+        @picture=Picture.new
+      end
+
     else
-      @picture=Picture.new
+      regenerate_index("ログインしてください（投稿作業はログインユーザーのみに許可されています）。")
     end
   end
 
@@ -52,12 +59,16 @@ class PicturesController < ApplicationController
 
   #更新画面表示
   def edit
+    if logged_in?
 
-    if  params[:back]
-        #「バリデーションに引っかかって戻る」場合、それまでの画面情報を変数に格納
-        reset_picture
+      if  params[:back]
+          #「バリデーションに引っかかって戻る」場合、それまでの画面情報を変数に格納
+          reset_picture
+      end
+
+    else
+      regenerate_index("ログインしてください（投稿作業はログインユーザーのみに許可されています）。")
     end
-
   end
 
 
@@ -123,8 +134,13 @@ class PicturesController < ApplicationController
   end
 
   def destroy
-    @picture.destroy
-    redirect_to pictures_path , notice: "投稿を削除しました。"
+    if logged_in?
+
+      @picture.destroy
+      regenerate_index("投稿を削除しました。")
+    else
+      regenerate_index("ログインしてください（投稿作業はログインユーザーのみに許可されています）。")
+    end
   end
 
 
@@ -152,6 +168,19 @@ class PicturesController < ApplicationController
 
   def picture_params
     params.require(:picture).permit(:title , :content,:image,:image_cache,:remove_image)
+  end
+
+  #インデックス画面で権限がないボタンを押した場合→それまで表示していたインデックスを再表示
+  def regenerate_index(msg)
+    if params[:user]==nil
+
+      redirect_to pictures_path, notice: msg
+
+    else
+
+      redirect_to user_index_picture_path(params[:user][:id]), notice: msg
+
+    end
   end
 
 end

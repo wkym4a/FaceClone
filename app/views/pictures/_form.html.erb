@@ -4,7 +4,6 @@
 <% end %>
 <!--↑エラーメッセージ表示枠-->
 
-
 <%= form_with(model: picture,local: true ,url:get_next_url_picture(picture.id) ,
               method: :post) do |f| %>
 
@@ -52,15 +51,24 @@
     <%  end %>
   <%  end %>
 
-
-
-  <%= f.submit "登録",class: 'btn btn-default btn_next'  %>
+    <% if logged_in? %>
+      <%= f.submit "登録",class: 'btn btn-default btn_next' ,disabled:false %>
+    <% else %>
+        <%= f.submit "登録",class: 'btn btn-default btn_next',disabled:true %>
+    <% end %>
 
     <% if ((params[:validate_err] ==nil && action_name== 'edit') || %>
     <% (params[:validate_err] == "on" && action_name== 'edit_confirm')) %>
-      <%= link_to '削除', picture, method: :delete,
-       data: { confirm: '本当に削除してよろしいですか?' } ,
-        class: 'btn btn-default btn_del' %>
+
+      <% if logged_in? %>
+        <%= link_to '削除', picture, method: :delete,
+         data: { confirm: '本当に削除してよろしいですか?' } ,
+          class: 'btn btn-default btn_del' ,disabled:false %>
+      <% else %>
+        <%= link_to '削除', picture, method: :delete,
+          class: 'btn btn-default btn_del',disabled:true %>
+      <% end %>
+
     <% end %>
 
 <% end %>
