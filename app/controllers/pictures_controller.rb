@@ -75,7 +75,7 @@ class PicturesController < ApplicationController
   def edit_confirm
     #更新画面で変更した（かもしれない）内容を、変数に格納
     reset_picture
-#binding.pry
+
     if @picture.invalid?
 
       params[:validate_err]=:on
@@ -87,7 +87,6 @@ class PicturesController < ApplicationController
   #参照画面表示
   def show
   end
-
 
   #新規登録処理
   def create
@@ -155,8 +154,6 @@ class PicturesController < ApplicationController
   def reset_picture
       @picture.title= picture_params[:title]
       @picture.content= picture_params[:content]
-
-#binding.pry
 
       if not (picture_params[:image]==nil )
 
