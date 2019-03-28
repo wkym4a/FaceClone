@@ -16,5 +16,4 @@ class User < ApplicationRecord
   #この「user」情報は、「picture」情報の親となっている（配下に複数の「picture」を持つ
   has_many :pictures
 
-
 end

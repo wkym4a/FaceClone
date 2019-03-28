@@ -2,7 +2,6 @@ class SessionsController < ApplicationController
 
   #ログイン画面表示
   def new
-
   end
 
   #ログイン時処理
@@ -19,7 +18,6 @@ class SessionsController < ApplicationController
 
         flash[:danger] = 'パスワードが間違っています。'
         render 'new'
-
     else
       #パスワードが合っていた場合→ユーザーのidを保存→ログイン
       session[:user_id]=user.id
@@ -39,7 +37,5 @@ class SessionsController < ApplicationController
     respond_to do |format|
       format.html{redirect_to new_session_path , notice: "ログアウトしました" }
     end
-
   end
-
 end
